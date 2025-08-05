@@ -114,24 +114,17 @@
 </table>
 <div class="pagination" id="pagination"></div>
 <script>
-    let projects = [
-        {
-            name: '示例项目',
-            website: '#',
-            logo: 'https://via.placeholder.com/40',
-            twitter: '#',
-            discord: '#',
-            tutorial: '#',
-            funding: '1000万美金',
-            location: '新加坡',
-            airdrop: '#',
-            updated: '2025-08-05'
-        }
-    ];
-
-    let rowsPerPage = 10; // 固定每页展示条数
+    let projects = [];
+    let rowsPerPage = 10; 
     let currentPage = 1;
     const tbody = document.querySelector('#projectTable tbody');
+
+    fetch('projects.json')
+        .then(response => response.json())
+        .then(data => {
+            projects = data;
+            renderTable();
+        });
 
     function renderTable() {
         tbody.innerHTML = '';
@@ -198,8 +191,6 @@
         }
         renderTable();
     }
-
-    renderTable();
 </script>
 </body>
 </html>

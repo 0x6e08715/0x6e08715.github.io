@@ -1,0 +1,26 @@
+[
+  {
+    "name": "项目A",
+    "website": "https://projectA.com",
+    "logo": "https://projectA.com/logo.png",
+    "twitter": "https://twitter.com/projectA",
+    "discord": "https://discord.com/invite/projectA",
+    "tutorial": "https://projectA.com/tutorial",
+    "funding": "1000万美金",
+    "location": "新加坡",
+    "airdrop": "https://projectA.com/airdrop",
+    "updated": "2025-08-05"
+  },
+  {
+    "name": "项目B",
+    "website": "https://projectB.com",
+    "logo": "https://projectB.com/logo.png",
+    "twitter": "https://twitter.com/projectB",
+    "discord": "https://discord.com/invite/projectB",
+    "tutorial": "https://projectB.com/tutorial",
+    "funding": "500万美金",
+    "location": "美国",
+    "airdrop": "https://projectB.com/airdrop",
+    "updated": "2025-08-01"
+  }
+]
