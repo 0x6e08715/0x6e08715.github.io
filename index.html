@@ -100,7 +100,7 @@
     }
     .bubble {
         position: absolute;
-        background: rgba(0, 175, 244, 0.3);
+        background: rgba(142, 24, 245, 0.3);
         border-radius: 50%;
         animation: float 15s infinite;
         z-index: 0;
@@ -140,6 +140,7 @@
             <th>项目Logo</th>
             <th>项目推特</th>
             <th>项目Discord</th>
+            <th>项目Telegram</th>
             <th>项目教程</th>
             <th>项目融资</th>
             <th>项目归属地</th>
@@ -173,6 +174,7 @@
                 <td><img src="${project.logo}" alt="logo"></td>
                 <td><a href="${project.twitter}" target="_blank" style="color:#00aff4">Twitter</a></td>
                 <td><a href="${project.discord}" target="_blank" style="color:#00aff4">Discord</a></td>
+                <td><a href="${project.telegram}" target="_blank" style="color:#00aff4">Telegram</a></td>
                 <td><a href="${project.tutorial}" target="_blank" style="color:#00aff4">教程</a></td>
                 <td>${project.funding}</td>
                 <td>${project.location}</td>
@@ -220,7 +222,7 @@
         }
     }
 
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < 80; i++) {
         const bubble = document.createElement('div');
         bubble.classList.add('bubble');
         bubble.style.width = `${Math.random() * 20 + 10}px`;
