@@ -13,15 +13,14 @@
         padding: 20px;
         line-height: 1.8;
         position: relative;
-        overflow: hidden;
-        display: flex;
-        justify-content: center;
+        min-height: 100vh; /* 保持页面高度 */
+        overflow-x: hidden; /* 只隐藏横向滚动条 */
     }
+
     .container {
         width: 70%;
         max-width: 1000px;
-        position: relative;
-        z-index: 1;
+        margin: 0 auto; /* 居中 */
     }
     header {
         text-align: center;
