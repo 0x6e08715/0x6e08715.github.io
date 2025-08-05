@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>项目教程页面</title>
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, sans-serif;
+        background: linear-gradient(to right, #1f1f1f, #2c2f33);
+        color: #f0f0f0;
+        margin: 0;
+        padding: 20px;
+        line-height: 1.8;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+    }
+    .container {
+        width: 70%;
+        max-width: 1000px;
+        position: relative;
+        z-index: 1;
+    }
+    header {
+        text-align: center;
+        background: linear-gradient(90deg, #3b3f44, #23272a);
+        color: #ffffff;
+        padding: 30px 20px;
+        border-radius: 12px;
+        margin-bottom: 25px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        font-size: 1.8rem;
+    }
+    .step {
+        background: #3a3e44;
+        padding: 25px;
+        margin-bottom: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        transition: transform 0.2s ease, background 0.3s ease;
+    }
+    .step:hover {
+        transform: translateY(-3px);
+        background: #444951;
+    }
+    .step h2 {
+        color: #00aff4;
+        margin-top: 0;
+        font-size: 1.5rem;
+        border-bottom: 2px solid #00aff4;
+        padding-bottom: 5px;
+    }
+    .step p {
+        font-size: 1.1rem;
+        color: #e2e2e2;
+    }
+    .step img {
+        display: block;
+        max-width: 90%;
+        border-radius: 8px;
+        margin: 15px auto 0;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+
+    /* 动画背景的小圆点 */
+    .bubble {
+        position: absolute;
+        background: rgba(0, 175, 244, 0.3);
+        border-radius: 50%;
+        animation: float 15s infinite;
+        z-index: 0;
+    }
+
+    @keyframes float {
+        0% {
+            transform: translateY(0) scale(1);
+            opacity: 0.6;
+        }
+        50% {
+            transform: translateY(-200px) scale(1.2);
+            opacity: 0.8;
+        }
+        100% {
+            transform: translateY(0) scale(1);
+            opacity: 0.6;
+        }
+    }
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+    <h1>示例项目教程</h1>
+</header>
+<div class="step">
+    <h2>步骤 1: 创建钱包</h2>
+    <p>首先，你需要创建一个 Web3 钱包，例如 MetaMask。</p>
+    <img src="images/step1.png" alt="创建钱包截图">
+</div>
+<div class="step">
+    <h2>步骤 2: 连接项目网站</h2>
+    <p>访问项目官网，点击右上角的“连接钱包”。</p>
+    <img src="images/step2.png" alt="连接钱包截图">
+</div>
+<div class="step">
+    <h2>步骤 3: 执行合约交互</h2>
+    <p>根据页面指引，填写必要信息并提交交易。</p>
+    <img src="images/step3.png" alt="执行合约截图">
+</div>
+</div>
+<script>
+    // 创建随机气泡动画元素
+    for (let i = 0; i < 20; i++) {
+        const bubble = document.createElement('div');
+        bubble.classList.add('bubble');
+        bubble.style.width = `${Math.random() * 20 + 10}px`;
+        bubble.style.height = bubble.style.width;
+        bubble.style.left = `${Math.random() * window.innerWidth}px`;
+        bubble.style.top = `${Math.random() * window.innerHeight}px`;
+        bubble.style.animationDuration = `${Math.random() * 10 + 10}s`;
+        document.body.appendChild(bubble);
+    }
+</script>
+</body>
+</html>
