@@ -7,10 +7,12 @@
 <style>
     body {
         font-family: 'Segoe UI', Tahoma, sans-serif;
-        background-color: #2c2f33;
+        background: linear-gradient(to right, #1f1f1f, #2c2f33);
         color: #e0e0e0;
         margin: 0;
         padding: 0;
+        position: relative;
+        overflow: hidden;
     }
     header {
         display: flex;
@@ -22,10 +24,12 @@
         border-bottom-left-radius: 15px;
         border-bottom-right-radius: 15px;
         box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        animation: fadeInDown 1s ease;
     }
     .controls {
         margin: 20px;
         text-align: right;
+        animation: fadeIn 1s ease;
     }
     .controls input, .controls button {
         padding: 10px;
@@ -36,6 +40,11 @@
         border-radius: 5px;
         outline: none;
         cursor: pointer;
+        transition: background 0.3s ease, transform 0.2s ease;
+    }
+    .controls button:hover {
+        background: #3a3e44;
+        transform: translateY(-2px);
     }
     table {
         width: 95%;
@@ -46,6 +55,7 @@
         box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         border-radius: 15px;
         overflow: hidden;
+        animation: fadeInUp 1.2s ease;
     }
     th, td {
         padding: 12px;
@@ -58,6 +68,9 @@
         font-weight: bold;
         cursor: pointer;
     }
+    tr {
+        transition: background-color 0.3s ease;
+    }
     tr:hover {
         background-color: #3a3e44;
     }
@@ -65,10 +78,15 @@
         max-width: 40px;
         height: auto;
         border-radius: 8px;
+        transition: transform 0.3s ease;
+    }
+    img:hover {
+        transform: scale(1.2);
     }
     .pagination {
         text-align: center;
         margin: 20px;
+        animation: fadeIn 1.5s ease;
     }
     .pagination button {
         padding: 8px 12px;
@@ -78,10 +96,36 @@
         color: white;
         cursor: pointer;
         border-radius: 20px;
-        transition: background-color 0.2s;
+        transition: background-color 0.2s, transform 0.2s;
     }
     .pagination button:hover {
         background: linear-gradient(90deg, #4752c4, #3641b7);
+        transform: translateY(-2px);
+    }
+    /* 动画背景的小圆点 */
+    .bubble {
+        position: absolute;
+        background: rgba(0, 175, 244, 0.3);
+        border-radius: 50%;
+        animation: float 15s infinite;
+        z-index: 0;
+    }
+    @keyframes float {
+        0% {transform: translateY(0) scale(1); opacity: 0.6;}
+        50% {transform: translateY(-200px) scale(1.2); opacity: 0.8;}
+        100% {transform: translateY(0) scale(1); opacity: 0.6;}
+    }
+    @keyframes fadeInDown {
+        from {opacity: 0; transform: translateY(-20px);}
+        to {opacity: 1; transform: translateY(0);}
+    }
+    @keyframes fadeInUp {
+        from {opacity: 0; transform: translateY(20px);}
+        to {opacity: 1; transform: translateY(0);}
+    }
+    @keyframes fadeIn {
+        from {opacity: 0;}
+        to {opacity: 1;}
     }
 </style>
 </head>
@@ -115,7 +159,7 @@
 <div class="pagination" id="pagination"></div>
 <script>
     let projects = [];
-    let rowsPerPage = 10; 
+    let rowsPerPage = 10;
     let currentPage = 1;
     const tbody = document.querySelector('#projectTable tbody');
 
@@ -190,6 +234,18 @@
             projects.sort((a, b) => new Date(b.updated) - new Date(a.updated));
         }
         renderTable();
+    }
+
+    // 创建随机气泡动画元素
+    for (let i = 0; i < 20; i++) {
+        const bubble = document.createElement('div');
+        bubble.classList.add('bubble');
+        bubble.style.width = `${Math.random() * 20 + 10}px`;
+        bubble.style.height = bubble.style.width;
+        bubble.style.left = `${Math.random() * window.innerWidth}px`;
+        bubble.style.top = `${Math.random() * window.innerHeight}px`;
+        bubble.style.animationDuration = `${Math.random() * 10 + 10}s`;
+        document.body.appendChild(bubble);
     }
 </script>
 </body>
