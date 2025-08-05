@@ -31,7 +31,7 @@
         text-align: right;
         animation: fadeIn 1s ease;
     }
-    .controls input, .controls button {
+    .controls input {
         padding: 10px;
         margin: 0 5px;
         border: 1px solid #444;
@@ -41,10 +41,6 @@
         outline: none;
         cursor: pointer;
         transition: background 0.3s ease, transform 0.2s ease;
-    }
-    .controls button:hover {
-        background: #3a3e44;
-        transform: translateY(-2px);
     }
     table {
         width: 95%;
@@ -102,7 +98,6 @@
         background: linear-gradient(90deg, #4752c4, #3641b7);
         transform: translateY(-2px);
     }
-    /* 动画背景的小圆点 */
     .bubble {
         position: absolute;
         background: rgba(0, 175, 244, 0.3);
@@ -134,8 +129,6 @@
     <h1>Web3项目汇总</h1>
 </header>
 <div class="controls">
-    <button onclick="sortProjects('name')">按名称排序</button>
-    <button onclick="sortProjects('time')">按时间排序</button>
     <input type="text" id="searchInput" placeholder="搜索项目..." onkeyup="searchTable()">
 </div>
 <table id="projectTable">
@@ -227,17 +220,7 @@
         }
     }
 
-    function sortProjects(type) {
-        if (type === 'name') {
-            projects.sort((a, b) => a.name.localeCompare(b.name));
-        } else if (type === 'time') {
-            projects.sort((a, b) => new Date(b.updated) - new Date(a.updated));
-        }
-        renderTable();
-    }
-
-    // 创建随机气泡动画元素
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 50; i++) {
         const bubble = document.createElement('div');
         bubble.classList.add('bubble');
         bubble.style.width = `${Math.random() * 20 + 10}px`;
