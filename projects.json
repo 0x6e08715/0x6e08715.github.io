@@ -1,14 +1,14 @@
 [
   {
-    "name": "项目A",
-    "website": "https://projectA.com",
-    "logo": "https://projectA.com/logo.png",
-    "twitter": "https://twitter.com/projectA",
-    "discord": "https://discord.com/invite/projectA",
+    "name": "openmind",
+    "website": "https://fabric.openmind.org/",
+    "logo": "./logos/openmind.png",
+    "twitter": "https://x.com/openmind_agi",
+    "discord": "https://discord.gg/openmind",
     "tutorial": "./tutorials/test1.html",
-    "funding": "1000万美金",
-    "location": "新加坡",
-    "airdrop": "https://projectA.com/airdrop",
+    "funding": "2000万美金",
+    "location": "未知",
+    "airdrop": "#",
     "updated": "2025-08-05"
   },
   {
