@@ -24,5 +24,31 @@
     "location": "美国",
     "airdrop": "/",
     "updated": "2025-08-05"
+  },
+  {
+    "name": "gata",
+    "website": "https://app.gata.xyz/dataAgent",
+    "logo": "./logos/gata.svg",
+    "twitter": "https://x.com/Gata_xyz",
+    "discord": "discord.gg/aggregata",
+    "telegram": "#",
+    "tutorial": "./tutorials/gata.html",
+    "funding": "400万美金",
+    "location": "中国",
+    "airdrop": "/",
+    "updated": "2025-08-07"
+  },
+  {
+    "name": "monadscore",
+    "website": "https://dashboard.monadscore.xyz/signup/r/xp6V9mOv",
+    "logo": "./logos/monadscore.png",
+    "twitter": "https://x.com/monadscores_xyz",
+    "discord": "/",
+    "telegram": "/",
+    "tutorial": "./tutorials/monadscore.html",
+    "funding": "未知",
+    "location": "Monad生态",
+    "airdrop": "/",
+    "updated": "2025-08-05"
   }
 ]

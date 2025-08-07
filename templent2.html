@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>项目教程生成器</title>
+  <style>
+    body {
+      background: #2c2f33;
+      color: #f0f0f0;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      padding: 20px;
+    }
+    .module {
+      background: #3a3e44;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    input[type="text"], textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      background: #2b2e34;
+      color: #f0f0f0;
+      border: 1px solid #555;
+      border-radius: 6px;
+    }
+    input[type="file"] {
+      margin-top: 8px;
+    }
+    button {
+      background: #00aff4;
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    button:hover {
+      background: #008dc1;
+    }
+  </style>
+</head>
+<body>
+
+<h1>项目教程步骤编辑器</h1>
+
+<div id="modules"></div>
+
+<button onclick="addModule()">➕ 添加步骤模块</button>
+<button onclick="generateHTML()">🛠️ 生成 HTML</button>
+
+<script>
+let stepCount = 0;
+
+function addModule() {
+    stepCount++;
+    const container = document.getElementById("modules");
+    const div = document.createElement("div");
+    div.className = "module";
+    div.innerHTML = `
+        <label>步骤标题：</label>
+        <input type="text" name="title" placeholder="如：步骤 ${stepCount}">
+        <label>步骤说明：</label>
+        <textarea name="desc" rows="4" placeholder="请输入说明内容..."></textarea>
+        <label>上传图片：</label>
+        <input type="file" name="img" accept="image/*">
+    `;
+    container.appendChild(div);
+}
+
+function generateHTML() {
+    const modules = document.querySelectorAll(".module");
+    let stepsHTML = "";
+
+    const processModules = async () => {
+        for (let i = 0; i < modules.length; i++) {
+            const title = modules[i].querySelector('input[name="title"]').value || `步骤 ${i + 1}`;
+            const desc = modules[i].querySelector('textarea[name="desc"]').value;
+            const fileInput = modules[i].querySelector('input[name="img"]');
+            let imgTag = "";
+
+            if (fileInput.files.length > 0) {
+                const file = fileInput.files[0];
+                const base64 = await toBase64(file);
+                imgTag = `<img src="${base64}" alt="${title}截图">`;
+            }
+
+            stepsHTML += `
+<div class="step">
+  <h2>${title}</h2>
+  <p>${desc}</p>
+  ${imgTag}
+</div>`;
+        }
+
+        const fullHTML = getFullHTML(stepsHTML);
+        const newWin = window.open("", "_blank");
+        newWin.document.write("<pre>" + escapeHtml(fullHTML) + "</pre>");
+    };
+
+    processModules();
+}
+
+function toBase64(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+    });
+}
+
+function escapeHtml(unsafe) {
+    return unsafe
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+}
+
+function getFullHTML(steps) {
+    return `<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>项目教程页面</title>
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, sans-serif;
+        background: linear-gradient(to right, #1f1f1f, #2c2f33);
+        color: #f0f0f0;
+        margin: 0;
+        padding: 20px;
+        line-height: 1.8;
+        position: relative;
+        min-height: 100vh;
+        overflow-x: hidden;
+    }
+
+    .container {
+        width: 70%;
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+    header {
+        text-align: center;
+        background: linear-gradient(90deg, #3b3f44, #23272a);
+        color: #ffffff;
+        padding: 30px 20px;
+        border-radius: 12px;
+        margin-bottom: 25px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        font-size: 1.8rem;
+    }
+    .step {
+        background: #3a3e44;
+        padding: 25px;
+        margin-bottom: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        transition: transform 0.2s ease, background 0.3s ease;
+    }
+    .step:hover {
+        transform: translateY(-3px);
+        background: #444951;
+    }
+    .step h2 {
+        color: #00aff4;
+        margin-top: 0;
+        font-size: 1.5rem;
+        border-bottom: 2px solid #00aff4;
+        padding-bottom: 5px;
+    }
+    .step p {
+        font-size: 1.1rem;
+        color: #e2e2e2;
+    }
+    .step img {
+        display: block;
+        max-width: 90%;
+        border-radius: 8px;
+        margin: 15px auto 0;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+
+    /* 背景气泡动画 */
+    .bubble {
+        position: absolute;
+        background: rgba(0, 175, 244, 0.3);
+        border-radius: 50%;
+        animation: float 15s infinite;
+        z-index: 0;
+    }
+
+    @keyframes float {
+        0% {
+            transform: translateY(0) scale(1);
+            opacity: 0.6;
+        }
+        50% {
+            transform: translateY(-200px) scale(1.2);
+            opacity: 0.8;
+        }
+        100% {
+            transform: translateY(0) scale(1);
+            opacity: 0.6;
+        }
+    }
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+    <h1>示例项目教程</h1>
+</header>
+${steps}
+</div>
+<script>
+    for (let i = 0; i < 20; i++) {
+        const bubble = document.createElement('div');
+        bubble.classList.add('bubble');
+        const size = Math.random() * 20 + 10;
+        bubble.style.width = size + "px";
+        bubble.style.height = size + "px";
+        bubble.style.left = Math.random() * window.innerWidth + "px";
+        bubble.style.top = Math.random() * window.innerHeight + "px";
+        bubble.style.animationDuration = (Math.random() * 10 + 10) + "s";
+        document.body.appendChild(bubble);
+    }
+<\/script>
+</body>
+</html>`
+}
+
+</script>
+
+</body>
+</html>
