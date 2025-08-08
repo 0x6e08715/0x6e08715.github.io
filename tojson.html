@@ -16,6 +16,10 @@
     margin-top: 12px;
     font-weight: bold;
   }
+  form #jsonForm {
+    max-width: 500px;   /* 限制表单最大宽度 */
+    margin: 0 auto;     /* 水平居中 */
+  }
   input[type="text"] {
     width: 100%;
     padding: 8px;
@@ -78,37 +82,37 @@
 <h1>JSON 生成器</h1>
 
 <form id="jsonForm" onsubmit="return false;">
-  <label for="name">name:</label>
+  <label for="name">项目名称:</label>
   <input type="text" id="name" placeholder="/" />
 
-  <label for="website">website:</label>
+  <label for="website">项目地址	:</label>
   <input type="text" id="website" placeholder="/" />
 
-  <label for="logo">logo:</label>
+  <label for="logo">项目Logo:</label>
   <input type="text" id="logo" placeholder="#" />
 
-  <label for="twitter">twitter:</label>
+  <label for="twitter">项目推特:</label>
   <input type="text" id="twitter" placeholder="/" />
 
-  <label for="discord">discord:</label>
+  <label for="discord">项目discord:</label>
   <input type="text" id="discord" placeholder="/" />
 
-  <label for="telegram">telegram:</label>
+  <label for="telegram">项目telegram:</label>
   <input type="text" id="telegram" placeholder="/" />
 
-  <label for="tutorial">tutorial:</label>
+  <label for="tutorial">项目教程:</label>
   <input type="text" id="tutorial" placeholder="/" />
 
-  <label for="funding">funding:</label>
+  <label for="funding">项目融资:</label>
   <input type="text" id="funding" placeholder="/" />
 
-  <label for="location">location:</label>
+  <label for="location">项目归属地:</label>
   <input type="text" id="location" placeholder="/" />
 
-  <label for="airdrop">airdrop:</label>
+  <label for="airdrop">空投领取地址:</label>
   <input type="text" id="airdrop" placeholder="/" />
 
-  <label for="updated">updated: <small>(自动填充当天日期)</small></label>
+  <label for="updated">信息更新时间: <small>(自动填充当天日期)</small></label>
   <input type="text" id="updated" readonly />
   
   <br />
