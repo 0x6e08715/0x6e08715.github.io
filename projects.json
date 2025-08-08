@@ -50,7 +50,7 @@
     "location": "Monad生态",
     "airdrop": "/",
     "updated": "2025-08-05"
-  },[
+  },
   {
     "name": "megaeth",
     "website": "https://testnet.megaeth.com",
@@ -64,5 +64,4 @@
     "airdrop": "/",
     "updated": "2025-08-08"
   }
-]
 ]
