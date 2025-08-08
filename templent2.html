@@ -15,6 +15,7 @@
       padding: 20px;
       margin-bottom: 20px;
       border-radius: 10px;
+      position: relative;
     }
     label {
       display: block;
@@ -44,6 +45,22 @@
     }
     button:hover {
       background: #008dc1;
+    }
+    /* 删除按钮样式 */
+    .delete-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #ff4d4d;
+      color: white;
+      border: none;
+      padding: 6px 10px;
+      font-size: 12px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .delete-btn:hover {
+      background: #cc0000;
     }
     /* 弹窗样式 */
     #popup {
@@ -103,6 +120,7 @@ function addModule() {
     const div = document.createElement("div");
     div.className = "module";
     div.innerHTML = `
+        <button class="delete-btn" onclick="deleteModule(this)">删除</button>
         <label>步骤标题：</label>
         <input type="text" name="title" placeholder="如：步骤 ${stepCount}">
         <label>步骤说明：</label>
@@ -111,6 +129,11 @@ function addModule() {
         <input type="file" name="img" accept="image/*">
     `;
     container.appendChild(div);
+}
+
+function deleteModule(btn) {
+    const moduleDiv = btn.parentElement;
+    moduleDiv.remove();
 }
 
 function generateHTML() {
@@ -168,7 +191,7 @@ function getFullHTML(steps) {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>项目教程页面</title>
+<title>项目教程</title>
 <style>
     body {
         font-family: 'Segoe UI', Tahoma, sans-serif;
@@ -195,19 +218,6 @@ function getFullHTML(steps) {
         margin-bottom: 25px;
         box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
         font-size: 1.8rem;
-    }
-    .link-bar {
-        text-align: center;
-        margin-bottom: 20px;
-    }
-    .link-bar a {
-        color: #00aff4;
-        text-decoration: none;
-        font-size: 1.2rem;
-        margin: 0 10px;
-    }
-    .link-bar a:hover {
-        color: #ff4dff;
     }
     .step {
         background: #3a3e44;
@@ -258,10 +268,6 @@ function getFullHTML(steps) {
 <header>
     <h1>我的项目教程</h1>
 </header>
-<div class="link-bar">
-    <a href="https://example.com" target="_blank">官方网站</a>
-    <a href="https://github.com" target="_blank">GitHub</a>
-</div>
 ${steps}
 </div>
 <script>
