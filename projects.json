@@ -63,5 +63,18 @@
     "location": "中国",
     "airdrop": "/",
     "updated": "2025-08-08"
-  }
+  },
+  {
+  "name": "onprover",
+  "website": "https://onprover.orochi.network/",
+  "logo": "./logos/onprover.svg",
+  "twitter": "https://x.com/OrochiNetwork",
+  "discord": "https://discord.com/invite/sTU4TUh8H3",
+  "telegram": "/",
+  "tutorial": "./tutorials/onprover.html",
+  "funding": "未知",
+  "location": "monad生态",
+  "airdrop": "/",
+  "updated": "2025-08-08"
+}
 ]
