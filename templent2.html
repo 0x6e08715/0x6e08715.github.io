@@ -1,292 +1,212 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-  <meta charset="UTF-8">
-  <title>项目教程生成器</title>
-  <style>
-    body {
-      background: #2c2f33;
-      color: #f0f0f0;
-      font-family: 'Segoe UI', Tahoma, sans-serif;
-      padding: 20px;
-    }
-    .module {
-      background: #3a3e44;
-      padding: 20px;
-      margin-bottom: 20px;
-      border-radius: 10px;
-      position: relative;
-    }
-    label {
-      display: block;
-      margin-top: 10px;
-      font-weight: bold;
-    }
-    input[type="text"], textarea {
-      width: 100%;
-      padding: 8px;
-      margin-top: 5px;
-      background: #2b2e34;
-      color: #f0f0f0;
-      border: 1px solid #555;
-      border-radius: 6px;
-    }
-    input[type="file"] {
-      margin-top: 8px;
-    }
-    button {
-      background: #00aff4;
-      color: white;
-      border: none;
-      padding: 10px 16px;
-      border-radius: 8px;
-      cursor: pointer;
-      margin-top: 20px;
-    }
-    button:hover {
-      background: #008dc1;
-    }
-    /* 删除按钮样式 */
-    .delete-btn {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      background: #ff4d4d;
-      color: white;
-      border: none;
-      padding: 6px 10px;
-      font-size: 12px;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-    .delete-btn:hover {
-      background: #cc0000;
-    }
-    /* 弹窗样式 */
-    #popup {
-      display: none;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: #1e1e1e;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.5);
-      width: 80%;
-      height: 70%;
-      z-index: 999;
-    }
-    #popup textarea {
-      width: 100%;
-      height: 80%;
-      background: #000;
-      color: #0f0;
-      font-family: monospace;
-      font-size: 14px;
-      padding: 10px;
-      border-radius: 6px;
-      border: none;
-      resize: none;
-    }
-    #popup button {
-      margin-top: 10px;
-    }
-  </style>
-</head>
-<body>
-
-<h1>项目教程步骤编辑器</h1>
-
-<div id="modules"></div>
-
-<button onclick="addModule()">➕ 添加步骤模块</button>
-<button onclick="generateHTML()">🛠️ 生成 HTML</button>
-
-<!-- 弹出层 -->
-<div id="popup">
-  <textarea id="codeOutput" readonly></textarea>
-  <br>
-  <button onclick="copyCode()">📋 复制代码</button>
-  <button onclick="document.getElementById('popup').style.display='none'">❌ 关闭</button>
-</div>
-
-<script>
-let stepCount = 0;
-
-function addModule() {
-    stepCount++;
-    const container = document.getElementById("modules");
-    const div = document.createElement("div");
-    div.className = "module";
-    div.innerHTML = `
-        <button class="delete-btn" onclick="deleteModule(this)">删除</button>
-        <label>步骤标题：</label>
-        <input type="text" name="title" placeholder="如：步骤 ${stepCount}">
-        <label>步骤说明：</label>
-        <textarea name="desc" rows="4" placeholder="请输入说明内容..."></textarea>
-        <label>上传图片：</label>
-        <input type="file" name="img" accept="image/*">
-    `;
-    container.appendChild(div);
-}
-
-function deleteModule(btn) {
-    const moduleDiv = btn.parentElement;
-    moduleDiv.remove();
-}
-
-function generateHTML() {
-    const modules = document.querySelectorAll(".module");
-    let stepsHTML = "";
-
-    const processModules = async () => {
-        for (let i = 0; i < modules.length; i++) {
-            const title = modules[i].querySelector('input[name="title"]').value || `步骤 ${i + 1}`;
-            const desc = modules[i].querySelector('textarea[name="desc"]').value;
-            const fileInput = modules[i].querySelector('input[name="img"]');
-            let imgTag = "";
-
-            if (fileInput.files.length > 0) {
-                const file = fileInput.files[0];
-                const base64 = await toBase64(file);
-                imgTag = `<img src="${base64}" alt="${title}截图">`;
-            }
-
-            stepsHTML += `
-<div class="step">
-  <h2>${title}</h2>
-  <p>${desc}</p>
-  ${imgTag}
-</div>`;
-        }
-
-        const fullHTML = getFullHTML(stepsHTML);
-        document.getElementById("codeOutput").value = fullHTML;
-        document.getElementById("popup").style.display = "block";
-    };
-
-    processModules();
-}
-
-function toBase64(file) {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = error => reject(error);
-    });
-}
-
-function copyCode() {
-    const codeArea = document.getElementById("codeOutput");
-    codeArea.select();
-    document.execCommand("copy");
-    alert("代码已复制到剪贴板！");
-}
-
-function getFullHTML(steps) {
-    return `<!DOCTYPE html>
-<html lang="zh">
-<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>项目教程</title>
+<title>步骤生成器</title>
 <style>
     body {
-        font-family: 'Segoe UI', Tahoma, sans-serif;
-        background: linear-gradient(to right, #1f1f1f, #2c2f33);
-        color: #f0f0f0;
+        font-family: Arial, sans-serif;
         margin: 0;
-        padding: 20px;
-        line-height: 1.8;
-        position: relative;
-        min-height: 100vh;
+        padding: 0;
+        background: linear-gradient(120deg, #89f7fe, #66a6ff);
         overflow-x: hidden;
     }
-    .container {
-        width: 70%;
-        max-width: 1000px;
-        margin: 0 auto;
-    }
-    header {
+    h1 {
         text-align: center;
-        background: linear-gradient(90deg, #3b3f44, #23272a);
-        color: #ffffff;
-        padding: 30px 20px;
-        border-radius: 12px;
-        margin-bottom: 25px;
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-        font-size: 1.8rem;
+        padding: 20px;
+        color: #fff;
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+    }
+    #steps-container {
+        max-width: 800px;
+        margin: 20px auto;
+        background: rgba(255, 255, 255, 0.9);
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     }
     .step {
-        background: #3a3e44;
-        padding: 25px;
-        margin-bottom: 20px;
-        border-radius: 12px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        transition: transform 0.2s ease, background 0.3s ease;
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
     }
-    .step:hover {
-        transform: translateY(-3px);
-        background: #444951;
+    .step input {
+        flex: 1;
+        padding: 8px;
+        margin-right: 10px;
     }
-    .step h2 {
-        color: #00aff4;
-        margin-top: 0;
-        font-size: 1.5rem;
-        border-bottom: 2px solid #00aff4;
-        padding-bottom: 5px;
+    .step button {
+        padding: 8px 12px;
+        background: #ff4d4f;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
     }
-    .step p {
-        font-size: 1.1rem;
-        color: #e2e2e2;
+    .step button:hover {
+        background: #d9363e;
     }
-    .step img {
-        display: block;
-        max-width: 90%;
-        border-radius: 8px;
-        margin: 15px auto 0;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    button {
+        padding: 10px 15px;
+        background: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin: 5px;
     }
+    button:hover {
+        background: #45a049;
+    }
+    /* 气泡背景动画 */
     .bubble {
-        position: absolute;
-        background: rgba(255, 43, 163, 0.902);
+        position: fixed;
+        bottom: -50px;
+        background: rgba(255, 255, 255, 0.2);
         border-radius: 50%;
-        animation: float 15s infinite;
-        z-index: 0;
+        animation: rise 15s infinite ease-in;
+        pointer-events: none;
     }
-    @keyframes float {
-        0% {transform: translateY(0) scale(1);opacity: 0.6;}
-        50% {transform: translateY(-200px) scale(1.2);opacity: 0.8;}
-        100% {transform: translateY(0) scale(1);opacity: 0.6;}
+    @keyframes rise {
+        0% {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+        100% {
+            transform: translateY(-110vh) scale(0.5);
+            opacity: 0;
+        }
     }
 </style>
 </head>
 <body>
-<div class="container">
-<header>
-    <h1>我的项目教程</h1>
-</header>
-${steps}
+
+<h1>网页步骤生成器</h1>
+<div id="steps-container">
+    <div id="steps"></div>
+    <button onclick="addStep()">添加步骤</button>
+    <button onclick="generateHTML()">生成HTML</button>
 </div>
+
 <script>
-    for (let i = 0; i < 50; i++) {
-        const bubble = document.createElement('div');
-        bubble.classList.add('bubble');
-        const size = Math.random() * 20 + 10;
-        bubble.style.width = size + "px";
-        bubble.style.height = size + "px";
-        bubble.style.left = Math.random() * window.innerWidth + "px";
-        bubble.style.top = Math.random() * window.innerHeight + "px";
-        bubble.style.animationDuration = (Math.random() * 10 + 10) + "s";
-        document.body.appendChild(bubble);
+    let stepCount = 0;
+
+    function addStep() {
+        stepCount++;
+        const stepDiv = document.createElement('div');
+        stepDiv.className = 'step';
+        stepDiv.innerHTML = `
+            <input type="text" placeholder="请输入步骤内容">
+            <button onclick="removeStep(this)">删除</button>
+        `;
+        document.getElementById('steps').appendChild(stepDiv);
     }
+
+    function removeStep(btn) {
+        btn.parentElement.remove();
+    }
+
+    function generateHTML() {
+        const steps = document.querySelectorAll('#steps input');
+        let stepHtml = '';
+        steps.forEach((input, index) => {
+            stepHtml += `<p>步骤 ${index + 1}: ${input.value}</p>\n`;
+        });
+
+        const htmlCode = `
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>生成的步骤页面</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(120deg, #89f7fe, #66a6ff);
+        padding: 20px;
+        overflow-x: hidden;
+    }
+    h1 {
+        text-align: center;
+        color: #fff;
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+    }
+    p {
+        background: rgba(255,255,255,0.8);
+        padding: 10px;
+        border-radius: 5px;
+    }
+    a {
+        display: inline-block;
+        margin-top: 10px;
+        color: #ff4d4f;
+        text-decoration: none;
+        font-weight: bold;
+    }
+    .bubble {
+        position: fixed;
+        bottom: -50px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        animation: rise 15s infinite ease-in;
+        pointer-events: none;
+    }
+    @keyframes rise {
+        0% {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+        100% {
+            transform: translateY(-110vh) scale(0.5);
+            opacity: 0;
+        }
+    }
+</style>
+</head>
+<body>
+<h1>任务步骤</h1>
+${stepHtml}
+<a href="https://example.com" target="_blank">点此访问链接</a>
+<script>
+    function createBubbles() {
+        for (let i = 0; i < 15; i++) {
+            const bubble = document.createElement('div');
+            bubble.className = 'bubble';
+            const size = Math.random() * 40 + 10;
+            bubble.style.width = size + 'px';
+            bubble.style.height = size + 'px';
+            bubble.style.left = Math.random() * 100 + 'vw';
+            bubble.style.animationDuration = (Math.random() * 10 + 10) + 's';
+            document.body.appendChild(bubble);
+        }
+    }
+    createBubbles();
 <\/script>
 </body>
-</html>`;
-}
-</script>
+</html>
+        `;
 
+        // 弹窗输出 HTML
+        const w = window.open("", "GeneratedHTML", "width=800,height=600");
+        w.document.write(`<pre>${htmlCode.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</pre>`);
+        w.document.close();
+    }
+
+    function createBubbles() {
+        for (let i = 0; i < 15; i++) {
+            const bubble = document.createElement('div');
+            bubble.className = 'bubble';
+            const size = Math.random() * 40 + 10;
+            bubble.style.width = size + 'px';
+            bubble.style.height = size + 'px';
+            bubble.style.left = Math.random() * 100 + 'vw';
+            bubble.style.animationDuration = (Math.random() * 10 + 10) + 's';
+            document.body.appendChild(bubble);
+        }
+    }
+    createBubbles();
+</script>
 </body>
 </html>
