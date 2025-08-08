@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>JSON 生成器</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background: #2c2f33;
+    color: #f0f0f0;
+    padding: 20px;
+  }
+  label {
+    display: block;
+    margin-top: 12px;
+    font-weight: bold;
+  }
+  input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    margin-top: 6px;
+    background: #2b2e34;
+    color: #f0f0f0;
+    border: 1px solid #555;
+    border-radius: 6px;
+    box-sizing: border-box;
+  }
+  button {
+    background: #00aff4;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 20px;
+    margin-right: 10px;
+    font-size: 16px;
+  }
+  button:hover {
+    background: #008dc1;
+  }
+  /* 弹窗 */
+  #popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #1e1e1e;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.7);
+    width: 80%;
+    max-width: 600px;
+    height: 60%;
+    z-index: 1000;
+  }
+  #popup textarea {
+    width: 100%;
+    height: 85%;
+    background: #000;
+    color: #0f0;
+    font-family: monospace;
+    font-size: 14px;
+    padding: 10px;
+    border-radius: 6px;
+    border: none;
+    resize: none;
+  }
+  #popup button {
+    margin-top: 10px;
+  }
+</style>
+</head>
+<body>
+
+<h1>JSON 生成器</h1>
+
+<form id="jsonForm" onsubmit="return false;">
+  <label for="name">name:</label>
+  <input type="text" id="name" placeholder="/" />
+
+  <label for="website">website:</label>
+  <input type="text" id="website" placeholder="/" />
+
+  <label for="logo">logo:</label>
+  <input type="text" id="logo" placeholder="#" />
+
+  <label for="twitter">twitter:</label>
+  <input type="text" id="twitter" placeholder="/" />
+
+  <label for="discord">discord:</label>
+  <input type="text" id="discord" placeholder="/" />
+
+  <label for="telegram">telegram:</label>
+  <input type="text" id="telegram" placeholder="/" />
+
+  <label for="tutorial">tutorial:</label>
+  <input type="text" id="tutorial" placeholder="/" />
+
+  <label for="funding">funding:</label>
+  <input type="text" id="funding" placeholder="/" />
+
+  <label for="location">location:</label>
+  <input type="text" id="location" placeholder="/" />
+
+  <label for="airdrop">airdrop:</label>
+  <input type="text" id="airdrop" placeholder="/" />
+
+  <label for="updated">updated: <small>(自动填充当天日期)</small></label>
+  <input type="text" id="updated" readonly />
+  
+  <br />
+  <button type="button" onclick="generateJSON()">生成 JSON</button>
+  <button type="button" onclick="clearForm()">清空表单</button>
+</form>
+
+<!-- 弹窗 -->
+<div id="popup">
+  <textarea id="jsonOutput" readonly></textarea>
+  <br />
+  <button onclick="copyJSON()">📋 复制 JSON</button>
+  <button onclick="closePopup()">关闭</button>
+</div>
+
+<script>
+  // 自动填充当天日期
+  function fillTodayDate() {
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    document.getElementById('updated').value = `${yyyy}-${mm}-${dd}`;
+  }
+
+  fillTodayDate();
+
+  // 清空表单
+  function clearForm() {
+    const form = document.getElementById('jsonForm');
+    form.reset();
+    fillTodayDate(); // 重新填充日期
+  }
+
+  // 生成 JSON
+  function generateJSON() {
+    const data = {
+      name: document.getElementById('name').value || "/",
+      website: document.getElementById('website').value || "/",
+      logo: document.getElementById('logo').value || "#",
+      twitter: document.getElementById('twitter').value || "/",
+      discord: document.getElementById('discord').value || "/",
+      telegram: document.getElementById('telegram').value || "/",
+      tutorial: document.getElementById('tutorial').value || "/",
+      funding: document.getElementById('funding').value || "/",
+      location: document.getElementById('location').value || "/",
+      airdrop: document.getElementById('airdrop').value || "/",
+      updated: document.getElementById('updated').value
+    };
+
+    const jsonStr = JSON.stringify([data], null, 2);
+
+    document.getElementById('jsonOutput').value = jsonStr;
+    document.getElementById('popup').style.display = 'block';
+  }
+
+  // 关闭弹窗
+  function closePopup() {
+    document.getElementById('popup').style.display = 'none';
+  }
+
+  // 复制 JSON
+  function copyJSON() {
+    const textarea = document.getElementById('jsonOutput');
+    textarea.select();
+    document.execCommand('copy');
+    alert('JSON 已复制到剪贴板！');
+  }
+</script>
+
+</body>
+</html>
