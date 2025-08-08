@@ -16,9 +16,9 @@
     margin-top: 12px;
     font-weight: bold;
   }
-  form #jsonForm {
-    max-width: 500px;   /* 限制表单最大宽度 */
-    margin: 0 auto;     /* 水平居中 */
+  #jsonForm {
+    max-width: 500px;
+    margin: 0 auto;
   }
   input[type="text"] {
     width: 100%;
@@ -85,7 +85,7 @@
   <label for="name">项目名称:</label>
   <input type="text" id="name" placeholder="/" />
 
-  <label for="website">项目地址	:</label>
+  <label for="website">项目地址:</label>
   <input type="text" id="website" placeholder="/" />
 
   <label for="logo">项目Logo:</label>
@@ -139,6 +139,17 @@
   }
 
   fillTodayDate();
+
+  // 监听项目名称变化，自动填充教程路径
+  document.getElementById('name').addEventListener('input', function() {
+    const nameValue = this.value.trim();
+    const tutorialInput = document.getElementById('tutorial');
+    if (nameValue) {
+      tutorialInput.value = `./tutorials/${nameValue}.html`;
+    } else {
+      tutorialInput.value = "/";
+    }
+  });
 
   // 清空表单
   function clearForm() {

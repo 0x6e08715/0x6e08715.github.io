@@ -50,5 +50,19 @@
     "location": "Monad生态",
     "airdrop": "/",
     "updated": "2025-08-05"
+  },[
+  {
+    "name": "megaeth",
+    "website": "https://testnet.megaeth.com",
+    "logo": "./logos/megaeth.png",
+    "twitter": "https://x.com/megaeth_labs",
+    "discord": "https://discord.com/invite/megaeth",
+    "telegram": "https://t.me/+wN8geyhVpE8yNmRl",
+    "tutorial": "./tutorials/megaeth.html",
+    "funding": "未知",
+    "location": "中国",
+    "airdrop": "/",
+    "updated": "2025-08-08"
   }
+]
 ]
