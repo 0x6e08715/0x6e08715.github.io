@@ -89,5 +89,18 @@
     "location": "monad生态",
     "airdrop": "/",
     "updated": "2025-08-08"
-  }
+  },
+  {
+  "name": "anoma",
+  "website": "https://testnet.anoma.net/",
+  "logo": "./logos/anoma.svg",
+  "twitter": "https://x.com/anoma",
+  "discord": "https://discord.com/invite/anoma",
+  "telegram": "https://t.me/anomanetwork",
+  "tutorial": "./tutorials/anoma.html",
+  "funding": "很多",
+  "location": "/",
+  "airdrop": "/",
+  "updated": "2025-08-24"
+}
 ]
